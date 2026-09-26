@@ -31,15 +31,15 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t devopspipeline:1.0 .'
+                bat '"C:\\Users\\admin\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t devopspipeline:1.0 .'
             }
         }
 
         stage('Docker Run') {
             steps {
                 bat '''
-                    docker rm -f devopspipeline-container 2>NUL || exit /b 0
-                    docker run --name devopspipeline-container devopspipeline:1.0
+                    "C:\\Users\\admin\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" rm -f devopspipeline-container 2>NUL
+                    "C:\\Users\\admin\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" run --name devopspipeline-container devopspipeline:1.0
                 '''
             }
         }
