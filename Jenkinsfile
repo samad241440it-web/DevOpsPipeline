@@ -28,11 +28,26 @@ pipeline {
                 echo 'Testing completed'
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t devopspipeline:1.0 .'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                bat '''
+                    docker rm -f devopspipeline-container 2>NUL || exit /b 0
+                    docker run --name devopspipeline-container devopspipeline:1.0
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo 'DevOps Pipeline completed successfully!'
+            echo 'End-to-End DevOps Pipeline completed successfully!'
         }
 
         failure {
