@@ -15,21 +15,28 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    bat 'mvn sonar:sonar -Dsonar.projectKey=DevOpsPipeline -Dsonar.projectName=DevOpsPipeline'
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 echo 'Testing completed'
             }
         }
-
     }
 
     post {
         success {
-            echo 'End-to-End DevOps Pipeline completed successfully!'
+            echo 'DevOps Pipeline completed successfully!'
         }
 
         failure {
-            echo 'Pipeline failed. Please check the console output.'
+            echo 'DevOps Pipeline failed. Check the console output.'
         }
     }
 }
